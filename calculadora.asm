@@ -9,6 +9,10 @@
 # 2° commit:
 # Data: 30/11/2025 | Hora: 18:21:00 | Revisao: 2.0 
 # Comentário: Implementacao das conversoes Octal, Hexadecimal e BCD.
+#
+# 3° commit:
+# Data: 30/11/2025 | Hora: 19:41:00 | Revisao: 3.0 
+# Comentário: Implementacao de Complemento a 2 e Ponto Flutuante IEEE 754.
 
 .data
     msg_titulo:     .asciiz "CALCULADORA PROGRAMADOR DIDATICA MIPS\n"
@@ -17,6 +21,18 @@
     msg_resto:      .asciiz "Quociente: "
     msg_quoc:       .asciiz " | Resto: "
     msg_resultado:  .asciiz "Resultado Binario: "
+    newline:        .asciiz "\n"
+    msg_dec_c2:     .asciiz "Passo a passo Decimal -> Complemento a 2 (16 bits):\n"
+    msg_c2_abs:     .asciiz "1. Valor Absoluto (16 bits): "
+    msg_c2_inv:     .asciiz "2. Inversao (C1): "
+    msg_c2_res:     .asciiz "3. Resultado (C2): "
+    
+    msg_float_prompt: .asciiz "\nDigite um numero real (float): "
+    msg_float_res:  .asciiz "Representacao Ponto Flutuante (IEEE 754 Single):\n"
+    msg_float_s:    .asciiz "Sinal (S): "
+    msg_float_e:    .asciiz "Expoente (E): "
+    msg_float_ev:   .asciiz "Expoente com Vies (E+127): "
+    msg_float_f:    .asciiz "Fracao (F): "
     newline:        .asciiz "\n"
 
 .text
@@ -46,6 +62,11 @@ main:
     
     move $a0, $s0
     jal dec_para_bcd
+	
+    move $a0, $s0
+    jal dec_para_c2
+    
+    jal real_para_float
 
     li $v0, 10
     syscall
@@ -86,6 +107,30 @@ dec_para_bcd:
     sw $ra, 0($sp)
     li $v0, 4; la $a0, msg_dec_bcd; syscall
     li $v0, 4; la $a0, msg_resultado_bcd; syscall
+    lw $ra, 0($sp); addi $sp, $sp, 4; jr $ra
+
+dec_para_c2:
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    li $v0, 4; la $a0, msg_dec_c2; syscall
+    
+    move $t0, $a0
+    bgez $t0, c2_positivo
+    
+c2_positivo:
+
+    lw $ra, 0($sp); addi $sp, $sp, 4; jr $ra
+
+real_para_float:
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    
+    li $v0, 4; la $a0, msg_float_prompt; syscall
+    li $v0, 6; syscall
+    
+    mfc1 $t0, $f0
+    
+    li $v0, 4; la $a0, msg_float_res; syscall
     lw $ra, 0($sp); addi $sp, $sp, 4; jr $ra
     
 conversao_loop:
