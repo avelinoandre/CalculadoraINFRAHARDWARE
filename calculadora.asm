@@ -1,5 +1,6 @@
 # Nome: André Avelino Freitas de Oliveira
-#
+# email: aafo@cesar.school
+# Link do repositorio do GitHub: https://github.com/avelinoandre/CalculadoraINFRAHARDWARE
 # Revisões/Commits:
 # 
 # 1° commit:
@@ -13,7 +14,10 @@
 # 3° commit:
 # Data: 30/11/2025 | Hora: 19:41:00 | Revisao: 3.0 
 # Comentário: Implementacao de Complemento a 2 e Ponto Flutuante IEEE 754.
-
+#
+# 4° commit:
+# Data: 30/11/2025 | Hora: 20:22:00 | Revisao: 4.0 
+# Comentário: adicionei os dados que faltavam na descrição (email etc)
 .data
     msg_titulo:     .asciiz "CALCULADORA PROGRAMADOR DIDATICA MIPS\n"
     msg_prompt_dec: .asciiz "Digite um numero decimal positivo: "
